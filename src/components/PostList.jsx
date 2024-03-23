@@ -4,7 +4,8 @@ import NewPost from "./NewPost";
 import Modal from "./Modal";
 import classes from "./PostList.module.css";
 
-function PostList({isPosting , onStopPosting }) {  // isPosting helps to tell whether the modalIsVisible is true or false ...so basically this state value is coming from the parent component which is app.jsx
+function PostList({ isPosting, onStopPosting }) {
+  // isPosting helps to tell whether the modalIsVisible is true or false ...so basically this state value is coming from the parent component which is app.jsx
   const [enteredBody, setEnteredBody] = useState("");
   const [enteredAuthor, setEnteredAuthor] = useState("");
 
@@ -14,7 +15,6 @@ function PostList({isPosting , onStopPosting }) {  // isPosting helps to tell wh
   function onAuthorChangeHandler(event) {
     setEnteredAuthor(event.target.value);
   }
-  
 
   return (
     <>
@@ -23,6 +23,7 @@ function PostList({isPosting , onStopPosting }) {  // isPosting helps to tell wh
           <NewPost
             onBodyChange={bodyChangeHandler}
             onAuthorChange={onAuthorChangeHandler}
+            onCancel={onStopPosting}
           />
         </Modal>
       )}
