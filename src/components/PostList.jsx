@@ -1,32 +1,13 @@
 import { useState, useEffect } from "react";
+import { useLoaderData } from "react-router-dom";
 import Post from "./Post";
-import NewPost from "./NewPost";
-import Modal from "./Modal";
+
 import classes from "./PostList.module.css";
 
-function PostList({ isPosting, onStopPosting }) {
+function PostList() {
   // isPosting helps to tell whether the modalIsVisible is true or false ...so basically this state value is coming from the parent component which is app.jsx
-  const [posts, setPosts] = useState([]);
+  const posts = useLoaderData();
 
-  useEffect(() => {
-    async function fetchPosts() {
-      const response = await fetch("http://localhost:8080/posts");
-      const resData = await response.json();
-      setPosts(resData.posts);
-    }
-    fetchPosts();
-  }, []);
-
-  // function addPostHandler(postData) {
-  //   fetch("http//localhost:8080/posts", {
-  //     method: "POST",
-  //     body: JSON.stringify(postData),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  //   setPosts((existingPosts) => [postData, ...existingPosts]);
-  // }
   async function addPostHandler(postData) {
     const response = await fetch("http://localhost:8080/posts", {
       method: "POST",
@@ -47,11 +28,6 @@ function PostList({ isPosting, onStopPosting }) {
   }
   return (
     <>
-      {isPosting && (
-        <Modal onClose={onStopPosting}>
-          <NewPost onCancel={onStopPosting} onAddPost={addPostHandler} />
-        </Modal>
-      )}
       {posts.length > 0 && (
         <ul className={classes.posts}>
           {posts.map((post) => (
